@@ -2,47 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-//using Tmp;
+using TMPro;
 
 [Serializable]
 public class BaseTile : MonoBehaviour
 {
-    public GameObject text;
+    public TextMeshPro textMeshProText;
+    public GameObject tile;
     private int tileValue;
     private int coordinateX;
     private int coordinateY;
+    public bool isActivated = false;
+    public MapGenerator mapGeneratorScript;
     
     public void SetTileValue (int value) {
         tileValue = value;
+    }
+    
+    public int GetTileValue () {
+        return tileValue;
     }
     
     public void SetCoordinates (int x, int y) {
         this.coordinateX = x;
         this.coordinateY = y;
     }
+
+    public void SetMapGeneratorScript (MapGenerator mapGenerator) {
+        this.mapGeneratorScript = mapGenerator;
+    }
     
     public bool IsCoordinates (int x, int y) {
         return (coordinateX == x) && (coordinateY == y);
     }
-    
-    public void OnButtonDown() {
-        if (tileValue > 8) {
+
+    public void ClickedOnTile () {
+        if (isActivated) {
+            // do nothing, because it is active already
+        } else if (tileValue > 8) {
+            // Scroll out, to see everything
+            // Instantiate a curtain
+            // activate every mine like a 0 tiles but slowly
             Debug.Log("game over");
+            ActivateTile();
         } else if (tileValue < 1) {
-//            GameObject.Find("MapGenerator").GetComponent<Script>("MapGenerator").ActivateAllEmptyConnection (coordinateX, coordinateY);
+            mapGeneratorScript.ActivateAllEmptyConnection (coordinateX, coordinateY);
         } else {
             ActivateTile();
+            mapGeneratorScript.IncereaseActivatedTileNumber();
+        }
+        if (mapGeneratorScript.CheckWinningCondition()) {
+            Debug.Log("game won");
         }
     }
-    
+   
     public void ActivateTile() {
-        text.SetEnabled(true);
-        SetEnabled(false);
+        isActivated = true;
+        tile.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
     {
-        text.SetEnabled(false);
+        textMeshProText.text = tileValue>8?"*":tileValue.ToString();
     }
 
     // Update is called once per frame
