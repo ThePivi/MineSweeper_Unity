@@ -21,8 +21,9 @@ public class CameraController : MonoBehaviour
     {
         screenHeight = Screen.height-1;
         screenWidth = Screen.width-1;
-        mainCamera.transform.position = CalcualateOrthoSize().center;
-        mainCamera.orthographicSize = CalcualateOrthoSize().size;
+        var cameraPositionAndSize = CalcualateOrthoSize();
+        mainCamera.transform.position = cameraPositionAndSize.center;
+        mainCamera.orthographicSize = cameraPositionAndSize.size==0f?1f:cameraPositionAndSize.size;
     }
 
     private (Vector3 center, float size) CalcualateOrthoSize() {
@@ -37,8 +38,8 @@ public class CameraController : MonoBehaviour
 
         var size = (Mathf.Max(horizontal, vertical) * 0.5f)/zoom;
         var center = bounds.center + new Vector3(0, 0, -10);
-        center.x = center.x - (screenWidth/zoom - GetMouseCoordinates().x)/(horizontal/zoom);
-        center.y = center.y - (screenHeight/zoom - GetMouseCoordinates().y)/(vertical/zoom);
+        //center.x = center.x - (screenWidth/zoom - GetMouseCoordinates().x)/(horizontal/zoom);
+        //center.y = center.y - (screenHeight/zoom - GetMouseCoordinates().y)/(vertical/zoom);
 
         return (center, size);
     }

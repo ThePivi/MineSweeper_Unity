@@ -7,29 +7,90 @@ public class MapGenerator : MonoBehaviour
     private int [,] map;
     public int mapSizeX = 5;
     public int mapSizeY = 5;
-    public int mineNumber = 11;
+    public int mineNumber = 1;
     public float gap = 0.1f;
     public GameObject [,] mapBaseTile;
     public GameObject wholeTile;
     private int activatedTileNumber = 0;
+    private int difficulty = 2;
+    private int mapWidth = 2;
+    private int mapHeight = 2;
+    public void SetDifficulty (int newDifficulty) {
+        difficulty = newDifficulty;
+    }
+    public void SetMapWidth (int newWidth) {
+        mapWidth = newWidth;
+    }
+    public void SetmapHeight (int newHeight) {
+        mapHeight = newHeight;
+    }
+    private void RecalculateMapDetails() {
+        switch(mapWidth) {
+            case 0:
+                SetMapSizeX(5);
+                break;
+            case 1:
+                SetMapSizeX(10);
+                break;
+            case 2:
+                SetMapSizeX(15);
+                break;
+            case 3:
+                SetMapSizeX(20);
+                break;
+            case 4:
+                SetMapSizeX(30);
+                break;
+            case 5:
+                SetMapSizeX(50);
+                break;
+        }
+        switch(mapHeight) {
+            case 0:
+                SetMapSizeY(5);
+                break;
+            case 1:
+                SetMapSizeY(10);
+                break;
+            case 2:
+                SetMapSizeY(15);
+                break;
+            case 3:
+                SetMapSizeY(20);
+                break;
+            case 4:
+                SetMapSizeY(30);
+                break;
+            case 5:
+                SetMapSizeY(50);
+                break;
+        }
+        SetMineNumber((int)((mapSizeX*mapSizeY)*(0.19*difficulty))+1);
+    }
     
     public void SetMineNumber (int newValue) {
         this.mineNumber = newValue;
-        GenerateMap();
     }
 
     public void SetMapSizeX (int newValue) {
         this.mapSizeX = newValue;
-        GenerateMap();
     }
 
     public void SetMapSizeY (int newValue) {
         this.mapSizeY = newValue;
-        GenerateMap();
     }
     
     public void GenerateMap () {
-    	if (!CheckMineNumberInvalid()) {
+        if (map != null) {
+            DeleteMap ();
+        }
+        
+        RecalculateMapDetails();
+        map = new int [mapSizeX, mapSizeY];
+        Debug.Log(mapSizeX+"-"+map.GetLength(0));
+        mapBaseTile = new GameObject [mapSizeX, mapSizeY];
+    	
+        if (!CheckMineNumberInvalid()) {
     	    Debug.Log("Map generation is not possible. Setup the mine number properly.");
     	} else {
       	    int mineCounter = 0;
@@ -55,6 +116,17 @@ public class MapGenerator : MonoBehaviour
     	}
     }
 
+    private void DeleteMap() {
+        for (int i = 0; i < mapSizeX; i++) {
+            for (int j = 0; j < mapSizeY; j++) {
+                Destroy(mapBaseTile [i, j]);
+                mapBaseTile [i, j] = null;
+            }
+        }
+        for (int i = 0; i < mapSizeX; i++) {
+            System.Array.Clear(map, i * mapSizeY, mapSizeY);
+        }
+    }
     public bool CheckMineNumberInvalid () {
         return (mineNumber < (mapSizeX*mapSizeY) && mineNumber > 0);
     }
@@ -132,9 +204,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        map = new int [mapSizeX, mapSizeY];
-        mapBaseTile = new GameObject [mapSizeX, mapSizeY];
-        GenerateMap();
+        
     }
 
     void Update()
