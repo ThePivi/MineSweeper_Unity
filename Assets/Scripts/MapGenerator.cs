@@ -89,7 +89,7 @@ public class MapGenerator : MonoBehaviour
     }
     
     private GameObject InstantiateNewTile (int i, int j) {
-        GameObject newTile = Instantiate(wholeTile, new Vector3((1 + gap) * i, (1 + gap) * j, 0f), transform.rotation);
+        GameObject newTile = Instantiate(wholeTile, new Vector3(((1 + gap) * i)+0.5f, ((1 + gap) * j)+0.5f, 0f), transform.rotation);
         BaseTile actualTileScript = newTile.GetComponent<BaseTile>();
         actualTileScript.SetCoordinates(i, j);
         actualTileScript.SetTileValue(map[i, j]);
@@ -124,8 +124,6 @@ public class MapGenerator : MonoBehaviour
     }
     public void IncereaseActivatedTileNumber () {
         activatedTileNumber++;
-        Debug.Log(activatedTileNumber.ToString() + CheckWinningCondition());
-        Debug.Log(activatedTileNumber.ToString() + mineNumber.ToString());
     }
 
     public bool CheckWinningCondition() {

@@ -222,7 +222,7 @@ MonoBehaviour:
   textMeshProText: {fileID: 6710111406309654890}
   tile: {fileID: 5293599771555268012}
   isActivated: 0
-  mapGenerator: {fileID: 5629465684138242078, guid: a9d3a5c0ac37deb41b431be0db6b39d8, type: 3}
+  mapGeneratorScript: {fileID: 0}
 --- !u!1 &5293599771555268012
 GameObject:
   m_ObjectHideFlags: 0
