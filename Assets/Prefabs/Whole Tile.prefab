@@ -223,6 +223,8 @@ MonoBehaviour:
   tile: {fileID: 5293599771555268012}
   isActivated: 0
   mapGeneratorScript: {fileID: 0}
+  ui: {fileID: 964161234867181158, guid: 31adc0c4e1fdb3c4b80d073612e0f351, type: 3}
+  menuControllerScript: {fileID: 0}
 --- !u!1 &5293599771555268012
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +361,6 @@ GameObject:
   - component: {fileID: 3667211309936908899}
   - component: {fileID: 3318831112685924193}
   - component: {fileID: 3688624019544732295}
-  - component: {fileID: 8278575787210216011}
   m_Layer: 0
   m_Name: Bottom Tile
   m_TagString: Tile
@@ -460,16 +461,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8278575787210216011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7511555332541000764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 223fb0bc901ce7f49a94aa6af1443517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wholeTile: {fileID: 1176926225728778147}

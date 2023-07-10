@@ -5,9 +5,9 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     private int [,] map;
-    public int mapSizeX = 5;
-    public int mapSizeY = 5;
-    public int mineNumber = 1;
+    public int mapSizeX = 0;
+    public int mapSizeY = 0;
+    public int mineNumber = 0;
     public float gap = 0.1f;
     public GameObject [,] mapBaseTile;
     public GameObject wholeTile;
@@ -15,6 +15,7 @@ public class MapGenerator : MonoBehaviour
     private int difficulty = 2;
     private int mapWidth = 2;
     private int mapHeight = 2;
+    public bool gameIsActive = false;
     public void SetDifficulty (int newDifficulty) {
         difficulty = newDifficulty;
     }
@@ -79,6 +80,10 @@ public class MapGenerator : MonoBehaviour
     public void SetMapSizeY (int newValue) {
         this.mapSizeY = newValue;
     }
+
+    public bool GetGameIsActive () {
+        return gameIsActive;
+    }
     
     public void GenerateMap () {
         if (map != null) {
@@ -87,7 +92,6 @@ public class MapGenerator : MonoBehaviour
         
         RecalculateMapDetails();
         map = new int [mapSizeX, mapSizeY];
-        Debug.Log(mapSizeX+"-"+map.GetLength(0));
         mapBaseTile = new GameObject [mapSizeX, mapSizeY];
     	
         if (!CheckMineNumberInvalid()) {
@@ -114,6 +118,7 @@ public class MapGenerator : MonoBehaviour
     	        }
     	    }
     	}
+        gameIsActive = true;
     }
 
     private void DeleteMap() {
@@ -200,6 +205,9 @@ public class MapGenerator : MonoBehaviour
 
     public bool CheckWinningCondition() {
         return (mapSizeX*mapSizeY) == (activatedTileNumber+mineNumber);
+    }
+    public void ResetVariables() {
+        activatedTileNumber = 0;
     }
 
     void Start()

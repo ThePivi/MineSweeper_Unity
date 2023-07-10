@@ -14,6 +14,7 @@ public class BaseTile : MonoBehaviour
     private int coordinateY;
     public bool isActivated = false;
     public MapGenerator mapGeneratorScript;
+    public MenuController menuControllerScript;
     
     public void SetTileValue (int value) {
         tileValue = value;
@@ -43,8 +44,9 @@ public class BaseTile : MonoBehaviour
             // Scroll out, to see everything
             // Instantiate a curtain
             // activate every mine like a 0 tiles but slowly
-            Debug.Log("game over");
             ActivateTile();
+            menuControllerScript.ShowLose();
+            mapGeneratorScript.ResetVariables();
         } else if (tileValue < 1) {
             mapGeneratorScript.ActivateAllEmptyConnection (coordinateX, coordinateY);
         } else {
@@ -52,7 +54,8 @@ public class BaseTile : MonoBehaviour
             mapGeneratorScript.IncereaseActivatedTileNumber();
         }
         if (mapGeneratorScript.CheckWinningCondition()) {
-            Debug.Log("game won");
+            menuControllerScript.ShowWin(mapGeneratorScript.mineNumber);
+            mapGeneratorScript.ResetVariables();
         }
     }
    
@@ -64,6 +67,7 @@ public class BaseTile : MonoBehaviour
     void Start()
     {
         textMeshProText.text = tileValue>8?"*":tileValue.ToString();
+        menuControllerScript = FindObjectOfType<MenuController>();
     }
 
     // Update is called once per frame
