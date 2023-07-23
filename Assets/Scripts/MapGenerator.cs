@@ -22,7 +22,7 @@ public class MapGenerator : MonoBehaviour
     public void SetMapWidth (int newWidth) {
         mapWidth = newWidth;
     }
-    public void SetmapHeight (int newHeight) {
+    public void SetMapHeight (int newHeight) {
         mapHeight = newHeight;
     }
     private void RecalculateMapDetails() {

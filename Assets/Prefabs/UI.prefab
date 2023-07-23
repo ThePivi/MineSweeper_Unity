@@ -881,6 +881,7 @@ MonoBehaviour:
   lose: {fileID: 643490054993800929}
   win: {fileID: 8319375495616452632}
   winText: {fileID: 7766993634557264953}
+  menuActive: 1
   coverActive: 0
   loseActive: 0
   winActive: 0
@@ -5299,7 +5300,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8449995504741925900}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: HideLoose
+        m_MethodName: HideLose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

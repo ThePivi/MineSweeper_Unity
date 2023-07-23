@@ -13,10 +13,11 @@ public class MenuController : MonoBehaviour
     public GameObject lose;
     public GameObject win;
     public TextMeshProUGUI winText;
-    private bool menuActive = true;
+    public bool menuActive = true;
     public bool coverActive = false;
     public bool loseActive = false;
     public bool winActive = false;
+    public bool gameRunning = false;
     public Button newGameButton;
     private int score;
     public TextMeshProUGUI scoreText;
@@ -24,46 +25,39 @@ public class MenuController : MonoBehaviour
         newGameButton.interactable = status;
     }
     public void HideMenu () {
-        //menu.SetActive(false);
         menuActive = false;
     }
     public void ShowMenu () {
-        //menu.SetActive(true);
         ToggleNewGameButtonTo(true);
         menuActive = true;
     }
     public void ShowCover () {
-        //loading.SetActive(true);
         coverActive = true;
     }
     public void HideCover () {
-        //loading.SetActive(false);
         coverActive = false;
     }
     public void ShowLose () {
-        //lose.SetActive(true);
-        coverActive = true;
+        ToggleGameRunning(false);
         loseActive = true;
     }
     public void HideLose () {
-        //menu.SetActive(true);
-        //lose.SetActive(false);
         loseActive = false;
         menuActive = true;
     }
     public void ShowWin (int newScore) {
-        //win.SetActive(true);
-        coverActive = true;
+        ToggleGameRunning(false);
         score += newScore;
         scoreText.text = "Total score: " + score + "";
         winText.text = "You found " + newScore + " mines!";
         winActive = true;
     }
     public void HideWin () {
-        //menu.SetActive(true);
-        //win.SetActive(false);
         winActive = false;
         menuActive = true;
+    }
+    public void ToggleGameRunning (bool isRunnuing) {
+        gameRunning = isRunnuing;
     }
 
     private static MenuController instance;
@@ -109,8 +103,12 @@ public class MenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)){
             if (menuActive && FindObjectOfType<MapGenerator>().GetGameIsActive()) {
                 HideMenu();
+                if (!gameRunning) {
+                    ShowCover();   
+                }
             } else if (!loseActive && !winActive) {
                 ShowMenu();
+                HideCover();
             }
         }
         menu.SetActive(menuActive);
